@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="id" placeholder="id">
+    <input type="text" id="price"  placeholder="price">
+    <input type="button" value="Quote" id="quote">
+    <script>
+        document.querySelector('#quote').addEventListener("click", e=>{
+            let qPrice=document.querySelector('#price').value || "0"
+            let qId=document.querySelector('#id').value || 'unknown'
+            fetch("/quote", {
+                method: "POST",
+                body: JSON.stringify([{key: qId, value: qPrice}]),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(res=>res.json())
+            .then(payload=>console.log(payload.data))
+            .catch(e=>console.log(e))
+        })
+    </script>
+</body>
+</html>
